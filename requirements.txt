@@ -1,0 +1,7 @@
+highway-env
+gymnasium
+matplotlib
+pandas
+ultralytics
+opencv-python
+pytest

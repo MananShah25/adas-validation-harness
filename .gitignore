@@ -1,0 +1,11 @@
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.DS_Store
+reports/*.md
+reports/*.pdf
+reports/*.png
+data/*.csv
+data/*.mp4
+*.egg-info/
