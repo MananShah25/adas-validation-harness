@@ -9,3 +9,5 @@ reports/*.png
 data/*.csv
 data/*.mp4
 *.egg-info/
+vision/weights/*.pt
+*.pt
