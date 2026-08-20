@@ -3,11 +3,12 @@ __pycache__/
 *.pyc
 .pytest_cache/
 .DS_Store
-reports/*.md
-reports/*.pdf
-reports/*.png
-data/*.csv
-data/*.mp4
+# Generated reports and plots, including per-track subfolders (reports/track1/, reports/track2/)
+reports/
+# Datasets and media are provided locally, not committed (data/* not data/,
+# so the .gitkeep placeholder can still be re-included below)
+data/*
+!data/.gitkeep
 *.egg-info/
 vision/weights/*.pt
 *.pt

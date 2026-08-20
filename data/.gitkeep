@@ -1,0 +1,2 @@
+# Place the OBD-II dataset here (exp1_14drivers_14cars_dailyRoutes.csv).
+# See README. Replay-mode tests skip cleanly if it is absent.
