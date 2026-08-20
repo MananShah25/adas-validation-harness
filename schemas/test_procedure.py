@@ -10,6 +10,15 @@ citations in generated reports):
   match: Euro NCAP's LSS protocol scores lane-keeping via Distance-To-Lane-
   Edge (DTLE) relative to the lane marking (-0.1m reference point), not a
   flat lateral offset from lane center.
+- No max_brake_response_latency_s gate: an earlier draft included one at
+  0.5s, but that number wasn't actually sourced from NHTSA/Euro NCAP (only
+  the TTC thresholds above were). Simulation runs showed genuinely safe,
+  correctly-behaving AEB scenarios taking 3-5s between the lead vehicle's
+  braking onset and AEB engagement, since that gap is dominated by closing
+  dynamics and ACC's own moderating response, not system reaction delay.
+  scenarios/aeb_scenarios.py still computes and reports brake_response_
+  latency_s per scenario as a diagnostic, just doesn't gate pass/fail on
+  an invented threshold.
 Sources: Euro NCAP AEB C2C Test Protocol v4.3, Euro NCAP Safe Driving
 Protocol v1.2 (2026), NHTSA AEB Final Rule (2024), Euro NCAP LSS Test
 Protocol v4.3.
@@ -45,7 +54,6 @@ DEFAULT_PASS_CRITERIA: dict[Feature, dict[str, float]] = {
     Feature.AEB: {
         "warning_time_to_collision_s": 2.0,
         "brake_time_to_collision_s": 1.8,
-        "max_brake_response_latency_s": 0.5,
     },
 }
 
