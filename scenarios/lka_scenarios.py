@@ -157,6 +157,7 @@ def run_lka_straight_scenario(spec: LkaScenarioSpec, seed: int = 0) -> TestResul
 
     for _ in range(steps):
         s, lateral_offset = lane.local_coordinates(ego.position)
+        s, lateral_offset = float(s), float(lateral_offset)
         heading_error = _wrap_angle(ego.heading - lane.heading_at(s))
         ego_speed = float(ego.speed)
 
@@ -207,6 +208,7 @@ def run_lka_curve_scenario(spec: LkaScenarioSpec, seed: int = 0) -> TestResult:
 
     for _ in range(steps):
         s, lateral_offset = lane.local_coordinates(ego.position)
+        s, lateral_offset = float(s), float(lateral_offset)
         heading_error = _wrap_angle(ego.heading - lane.heading_at(s))
         ego_speed = float(ego.speed)
 
