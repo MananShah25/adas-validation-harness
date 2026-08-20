@@ -12,3 +12,6 @@ data/*
 *.egg-info/
 vision/weights/*.pt
 *.pt
+
+# Private local reference notes — never publish
+.prior-art-and-scope.md
