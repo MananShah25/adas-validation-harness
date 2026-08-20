@@ -68,12 +68,12 @@ class MockOBDSource:
     before real hardware or a replayed dataset is available.
     """
 
-    def __init__(self, seed: int = 0, hz: float = 10.0):
+    def __init__(self, seed: int = 0, hz: float = 10.0, initial_speed_kph: float = 40.0):
         self._rng = random.Random(seed)
         self.hz = hz
         self.timestamp = 0.0
-        self._speed_kph = 40.0
-        self._rpm = 800.0 + 40.0 * 35.0
+        self._speed_kph = initial_speed_kph
+        self._rpm = 800.0 + initial_speed_kph * 35.0
         self._throttle = 20.0
         self._braking = False
         self._brake_timer = 0.0
@@ -313,11 +313,12 @@ class OBDReader:
         hz: float = 10.0,
         csv_path: str | Path | None = None,
         vehicle_id: str = "car1",
+        initial_speed_kph: float = 40.0,
     ):
         self.mode = mode
         self.hz = hz
         if mode == "mock":
-            self._source = MockOBDSource(seed=seed, hz=hz)
+            self._source = MockOBDSource(seed=seed, hz=hz, initial_speed_kph=initial_speed_kph)
         elif mode == "replay":
             if csv_path is None:
                 raise ValueError("OBDReader(mode='replay') requires csv_path")
