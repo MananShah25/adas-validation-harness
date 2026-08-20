@@ -19,19 +19,26 @@ from fusion.aeb_pipeline import run_all as run_track2_suite
 from scenarios.track1_suite import run_full_suite as run_track1_suite
 
 
-def run_and_confirm_convergence(output_dir: str = "reports") -> tuple[Path, Path]:
+def run_and_confirm_convergence(output_dir: str = "reports", emit_pdf: bool = False) -> tuple[Path, Path]:
     track1_report = run_track1_suite(
         output_dir=f"{output_dir}/track1",
         defect_log_path=f"{output_dir}/track1/defect_log.csv",
+        emit_pdf=emit_pdf,
     )
     track2_report = run_track2_suite(
         output_dir=f"{output_dir}/track2",
         defect_log_path=f"{output_dir}/track2/defect_log.csv",
+        emit_pdf=emit_pdf,
     )
     return track1_report, track2_report
 
 
 if __name__ == "__main__":
-    t1_report, t2_report = run_and_confirm_convergence()
+    import sys
+
+    emit_pdf = "--no-pdf" not in sys.argv
+    t1_report, t2_report = run_and_confirm_convergence(emit_pdf=emit_pdf)
     print(f"Track 1 (simulation) report: {t1_report}")
     print(f"Track 2 (backbone) report:   {t2_report}")
+    if emit_pdf:
+        print("PDF versions written alongside each (pass --no-pdf to skip).")

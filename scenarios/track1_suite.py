@@ -46,7 +46,11 @@ def _log_defect(defect_log: DefectLog, result: TestResult) -> None:
     )
 
 
-def run_full_suite(output_dir: str = "reports", defect_log_path: str = "reports/defect_log.csv") -> Path:
+def run_full_suite(
+    output_dir: str = "reports",
+    defect_log_path: str = "reports/defect_log.csv",
+    emit_pdf: bool = False,
+) -> Path:
     defect_log = DefectLog(defect_log_path)
 
     results: list[TestResult] = []
@@ -59,6 +63,8 @@ def run_full_suite(output_dir: str = "reports", defect_log_path: str = "reports/
             _log_defect(defect_log, result)
 
     builder = ReportBuilder(output_dir=output_dir)
+    if emit_pdf:
+        builder.build_pdf(results, defect_log=defect_log)
     return builder.build(results, defect_log=defect_log)
 
 
