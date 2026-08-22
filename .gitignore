@@ -15,3 +15,10 @@ vision/weights/*.pt
 
 # Private local reference notes — never publish
 .prior-art-and-scope.md
+
+# C++ build artifacts and the compiled extension module
+cpp/build/
+*.so
+*.dylib
+*.a
+*.o

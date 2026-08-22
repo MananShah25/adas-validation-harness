@@ -16,7 +16,12 @@ Both tracks write into the **same** test-procedure schema and the **same**
 defect-log format, so a threshold means the same thing regardless of whether
 the numbers came from a physics simulation or a real car.
 
-Everything runs on a MacBook with no external hardware. **127 tests pass.**
+The per-timestep **control-loop core is additionally implemented in C++17** and
+driven from the same Python scenarios via pybind11, with bit-exact parity proven
+against the Python reference (see [`cpp/`](cpp/README.md)).
+
+Everything runs on a MacBook with no external hardware. **143 Python tests + 32
+GoogleTest tests pass.**
 
 ---
 
@@ -81,9 +86,10 @@ vision/frames.py              time-addressable frame sequences (clips)
 vision/synthetic_clip.py      synthesized approach clip (real inference, not real footage)
 fusion/aeb_pipeline.py        OBD speed + vision gap -> TTC -> AEB score
 run_full_validation_suite.py  runs both tracks + the convergence check
+cpp/                          C++17 control-loop core + pybind11 bindings + GoogleTest
 data/                         the OBD-II dataset (gitignored)
 reports/                      generated reports and plots (gitignored)
-tests/                        127 tests
+tests/                        143 Python tests
 ```
 
 ---
@@ -100,8 +106,11 @@ Requires Python 3.9+. First use of the vision module downloads the YOLOv8n
 weights (~6 MB) into `vision/weights/` (gitignored).
 
 ```bash
-# full test suite (127 tests)
+# full Python test suite (143 tests)
 python3 -m pytest -q
+
+# build the C++ core, then run GoogleTest + the parity/equivalence tests
+./cpp/build.sh
 
 # Track 1 only — 29 simulated scenarios, one consolidated report
 python3 -m scenarios.track1_suite
